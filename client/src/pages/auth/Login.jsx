@@ -1,0 +1,91 @@
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+const Login = () => {
+  const[email,setEmail]=useState("");
+  const[password,setPassword]=useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    console.log(email,password);
+    
+    navigate("/home");
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-green-50 to-green-100 px-5">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl p-8"
+      >
+        <h1 className="text-4xl font-bold text-center text-green-700 mb-2">
+          🌾 Welcome Back
+        </h1>
+        <p className="text-center text-green-600 mb-6">
+          Login to your Farming Assistant
+        </p>
+
+        {/* Email Input */}
+        <label className="block font-semibold text-green-700 mb-1">Email</label>
+        <input
+          className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        {/* Password Input */}
+        <label className="block font-semibold text-green-700 mb-1">
+          Password
+        </label>
+        <input
+          className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {/* Login Button */}
+        <button
+          className="w-full p-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+
+        {/* Forgot Password */}
+        <div className="flex justify-end mt-2">
+          <Link
+            to="/forget"
+            className="text-sm text-green-600 font-medium hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        {/* Divider */}
+        <div className="my-4 border-t border-green-200"></div>
+
+        {/* Register Link */}
+        <p className="text-center text-sm text-green-700">
+          Don’t have an account?{" "}
+          <Link
+            to="/Register"
+            className="font-semibold text-green-700 hover:underline"
+          >
+            Register
+          </Link>
+        </p>
+      </motion.div>
+    </div>
+  );
+};
+
+export default Login;
