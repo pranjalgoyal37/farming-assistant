@@ -1,18 +1,44 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthProvider";
+import { axiosInstance } from "../../utils/axiosInstance";
+import { API_PATH } from "../../utils/apiPath";
 const Login = () => {
-  const[email,setEmail]=useState("");
-  const[password,setPassword]=useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log(email,password);
-    
-    navigate("/home");
+    try {
+      const response = await axiosInstance.post(API_PATH.AUTH.LOGIN, {
+        email,
+        password,
+      });
+      const data = response.data;
+      console.log(data);
+
+      const { role, token, user } = data;
+
+      // set the user and token in localstroge and AuthContext
+      login(token, user);
+
+      // role based redirection
+      // if (role?.toLowerCase() === "admin") {
+      //   navigate("/user/dashboard");
+      // } else {
+      //   navigate("/user/dashboard");
+      // }
+
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+      return;
+    }
   };
 
   return (
