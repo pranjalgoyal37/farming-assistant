@@ -1,151 +1,200 @@
-import { useState, useContext } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import Hero from "../assets/Hero.jpg";
-import { ThemeContext } from "../context/ThemeProvider";
-import NavBar from "../components/NavBar";
-
+import { useContext } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import Hero from '../assets/Hero.jpg'
+import { ThemeContext } from '../context/ThemeProvider'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Home/Footer'
 const Home = () => {
-  // const [dark, setDark] = useState(false);
-  const { dark } = useContext(ThemeContext);
+  const { dark } = useContext(ThemeContext)
 
   return (
     <div
       className={`min-h-screen transition-all duration-500 ${
-        dark
-          ? "bg-[#0a0f0a] text-white"
-          : "bg-gradient-to-br from-green-50 to-emerald-100 text-gray-800"
+        dark ? 'bg-[#0a0f0a] text-white' : 'bg-white text-gray-800'
       }`}
     >
-      {/* Nav Bar */}
+      {/* NavBar */}
       <NavBar />
 
-      {/* HERO SECTION */}
-      <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-20">
+      {/* === HERO SECTION === */}
+      <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 md:py-28 gap-10">
+        {/* LEFT TEXT */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl"
+          className="max-w-xl text-center md:text-left"
         >
           <h1
-            className={`text-5xl md:text-6xl font-extrabold leading-tight ${
-              dark ? "text-white" : "text-green-900"
+            className={`text-4xl md:text-6xl font-extrabold leading-tight ${
+              dark ? 'text-white' : 'text-green-900'
             }`}
           >
-            Grow Smarter With
-            <span className="text-green-700"> AI-Powered Farming</span>
+            Grow Smarter with
+            <span className="block text-green-600">AI-Powered Farming</span>
           </h1>
 
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            AgriSense combines nature, data and technology to help farmers make
-            better decisions — from crop selection to fertilizer guidance.
+          <p
+            className={`mt-4 text-lg ${
+              dark ? 'text-gray-300' : 'text-gray-600'
+            }`}
+          >
+            AgriSense combines nature, data and AI to help farmers make better
+            decisions — crop selection, plant health, fertilizer needs, and
+            more.
           </p>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Link
               to="/register"
-              className="px-6 py-3 bg-green-700 text-white rounded-lg shadow-md hover:bg-green-800 transition"
+              className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-lg hover:bg-green-700 transition font-semibold"
             >
               Get Started
             </Link>
 
             <Link
               to="/login"
-              className="px-6 py-3 border border-green-700 text-green-700 rounded-lg hover:bg-green-700 hover:text-white transition"
+              className="px-6 py-3 border-2 border-green-600 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition font-semibold"
             >
               Login
             </Link>
           </div>
         </motion.div>
 
+        {/* RIGHT IMAGE */}
         <motion.img
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          // src="https://stockcake.com/i/farmers-tending-crops_1260909_582733"
           src={Hero}
-          className="w-150 h-100 mt-10 md:mt-0 animate-float rounded-2xl"
+          className="w-full max-w-md rounded-2xl shadow-2xl object-cover"
         />
       </section>
 
-      {/* FEATURES SECTION */}
-      <section className="px-6 md:px-20 py-14">
-        <h2 className="text-4xl font-bold text-center mb-10 text-green-700">
+      {/* === FEATURES SECTION === */}
+      <section className="px-6 md:px-20 py-16">
+        <h2
+          className={`text-3xl md:text-4xl font-bold text-center mb-12 ${
+            dark ? 'text-green-300' : 'text-green-700'
+          }`}
+        >
           🌱 Key Features
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            {
-              title: "🌾 Crop Recommendation",
-              text: "Get suggestions for the best crops based on soil, weather and region.",
-            },
-            {
-              title: "🧪 Fertilizer Guide",
-              text: "Receive fertilizer mixes based on nutrient needs and crop type.",
-            },
-            {
-              title: "📸 Disease Detection",
-              text: "Upload leaf images to identify plant diseases instantly.",
-            },
-            {
-              title: "☁️ Live Weather Alerts",
-              text: "Be notified about rainfall, humidity, temperature instantly.",
-            },
-            {
-              title: "🤖 Smart Chat Assistant",
-              text: "Ask farming questions and get instant AI support.",
-            },
-            {
-              title: "📊 Analytics Dashboard",
-              text: "Track your farm progress with beautiful insights.",
-            },
-          ].map((f, i) => (
+            [
+              '🌾 Crop Recommendation',
+              'Get suggestions for the best crops based on soil & weather.'
+            ],
+            [
+              '🧪 Fertilizer Guide',
+              'Get nutrient-balanced fertilizer recommendations.'
+            ],
+            [
+              '📸 Disease Detection',
+              'Upload leaf images and detect diseases instantly.'
+            ],
+            [
+              '☁️ Weather Alerts',
+              'Stay updated with live rainfall, humidity & heat alerts.'
+            ],
+            [
+              '🤖 Smart Chat Assistant',
+              'Ask farming questions and get instant AI answers.'
+            ],
+            [
+              '📊 Analytics Dashboard',
+              'Track farm growth, soil health & reports.'
+            ]
+          ].map(([title, text], i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className={`p-6 rounded-xl shadow-lg backdrop-blur-lg transition-all duration-500 
-              ${
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className={`p-6 rounded-xl shadow-lg border ${
                 dark
-                  ? "bg-white/5 border border-white/10"
-                  : "bg-white/90 border border-green-200"
-              }`}
+                  ? 'bg-white/5 border-white/10'
+                  : 'bg-white border-green-100'
+              } hover:shadow-2xl hover:scale-[1.02] transition-transform`}
             >
-              <h3 className="text-2xl font-semibold mb-2">{f.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{f.text}</p>
+              <h3 className="text-xl font-semibold mb-2">{title}</h3>
+              <p
+                className={`${
+                  dark ? 'text-gray-300' : 'text-gray-600'
+                } text-sm md:text-base`}
+              >
+                {text}
+              </p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer
-        className={`mt-20 py-10 text-center ${
-          dark ? "bg-white/5 border-t border-white/10" : "bg-green-50"
-        }`}
-      >
-        <h3 className="text-xl font-semibold text-green-700">
-          🌿 AgriSense — Farming Made Smarter
-        </h3>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          Nurturing crops with the power of technology.
-        </p>
+      {/* === HOW AGRISENSE WORKS (REDESIGNED) === */}
+      <section className="px-6 md:px-20 py-20 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-transparent dark:to-transparent">
+        <h2
+          className={`text-3xl md:text-4xl font-bold text-center mb-14 ${
+            dark ? 'text-green-300' : 'text-green-800'
+          }`}
+        >
+          🚀 How AgriSense Works
+        </h2>
 
-        <div className="mt-4 flex justify-center gap-6 text-green-700 dark:text-green-300">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Contact</a>
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          {[
+            {
+              step: '1',
+              title: 'Upload Crop / Soil Data',
+              text: 'Enter soil values (NPK, pH, moisture) or crop symptoms.'
+            },
+            {
+              step: '2',
+              title: 'AI Processes Data',
+              text: 'AI analyzes soil, weather, plant health & disease signals.'
+            },
+            {
+              step: '3',
+              title: 'Get Instant Insights',
+              text: 'Receive crop, fertilizer & disease reports instantly.'
+            }
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className={`p-10 text-center rounded-2xl shadow-xl border ${
+                dark
+                  ? 'bg-white/5 border-white/10'
+                  : 'bg-white border-green-200'
+              } hover:scale-[1.03] transition-transform`}
+            >
+              <div
+                className={`text-6xl font-extrabold mb-4 ${
+                  dark ? 'text-green-300' : 'text-green-600'
+                }`}
+              >
+                {item.step}
+              </div>
+
+              <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
+
+              <p className={`${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+                {item.text}
+              </p>
+            </motion.div>
+          ))}
         </div>
+      </section>
 
-        <p className="mt-6 text-sm text-gray-500">
-          © {new Date().getFullYear()} AgriSense. All rights reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
