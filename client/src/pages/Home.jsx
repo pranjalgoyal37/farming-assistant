@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Hero from "../assets/Hero.jpg";
+import { ThemeContext } from "../context/ThemeProvider";
+import NavBar from "../components/NavBar";
 
 const Home = () => {
-  const [dark, setDark] = useState(false);
+  // const [dark, setDark] = useState(false);
+  const { dark } = useContext(ThemeContext);
 
   return (
     <div
@@ -13,49 +17,8 @@ const Home = () => {
           : "bg-gradient-to-br from-green-50 to-emerald-100 text-gray-800"
       }`}
     >
-      {/* Navbar */}
-      <nav
-        className={`w-full flex justify-between items-center px-8 py-4 shadow-md backdrop-blur-md 
-          ${
-            dark
-              ? "bg-white/5 border-b border-white/10"
-              : "bg-white/70 border-b border-green-300"
-          }`}
-      >
-        <h1 className="text-3xl font-extrabold text-[#2E7D32]">
-          🌿 AgriSense
-        </h1>
-
-        <div className="flex items-center gap-4">
-          <Link
-            to="/login"
-            className="px-5 py-2 rounded-lg bg-[#2E7D32] text-white font-semibold hover:bg-green-700 transition"
-          >
-            Login
-          </Link>
-
-          <Link
-            to="/register"
-            className="px-5 py-2 rounded-lg border border-green-700 text-green-700 font-semibold hover:bg-green-700 hover:text-white transition"
-          >
-            Register
-          </Link>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setDark(!dark)}
-            className="ml-4 w-14 p-1 rounded-full flex items-center bg-white/20 border border-white/30 transition"
-          >
-            <motion.div
-              animate={{ x: dark ? 24 : 2 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className={`w-6 h-6 rounded-full ${
-                dark ? "bg-yellow-300" : "bg-green-600"
-              }`}
-            ></motion.div>
-          </button>
-        </div>
-      </nav>
+      {/* Nav Bar */}
+      <NavBar />
 
       {/* HERO SECTION */}
       <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-20">
@@ -70,7 +33,7 @@ const Home = () => {
               dark ? "text-white" : "text-green-900"
             }`}
           >
-            Grow Smarter With  
+            Grow Smarter With
             <span className="text-green-700"> AI-Powered Farming</span>
           </h1>
 
@@ -100,8 +63,9 @@ const Home = () => {
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          src="https://cdn-icons-png.flaticon.com/512/7664/7664184.png"
-          className="w-80 mt-10 md:mt-0 animate-float"
+          // src="https://stockcake.com/i/farmers-tending-crops_1260909_582733"
+          src={Hero}
+          className="w-150 h-100 mt-10 md:mt-0 animate-float rounded-2xl"
         />
       </section>
 

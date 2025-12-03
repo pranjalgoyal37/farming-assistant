@@ -1,11 +1,66 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-
+import { axiosInstance } from "../../utils/axiosInstance";
+import { API_PATH } from "../../utils/apiPath";
+import { useState } from "react";
+import toast from "react-hot-toast";
 const Register = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    role: "farmer",
+    password: "",
+    confirmPassword: "",
+  });
+  const [loading, setLoading] = useState(false);
 
-  const goToLogin = () => {
-    navigate("/login");
+  const handleChange = (e) => {
+    const { name, value } = e.target; // ✅ use name + value
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRegistration = async () => {
+    const { fullName, email, role, password, confirmPassword } = formData;
+    console.log(formData);
+    console.log(fullName, email, role, password);
+
+    if (!fullName || !email || !role || !password || !confirmPassword) {
+      toast.error("All fields are required!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Example API Call
+      const response = await axiosInstance.post(API_PATH.AUTH.REGISTER, {
+        fullName,
+        email,
+        role,
+        password,
+      });
+
+      toast.success("Registration Successful!");
+      navigate("/login");
+    } catch (error) {
+      if (error.response) {
+        console.log("DATA:", JSON.stringify(error.response.data, null, 2)); // 👈 see fields & messages
+        toast.error(
+          error.response.data.detail?.message || "Registration Failed!"
+        );
+      } else {
+        console.error(error);
+        toast.error("Network error");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,6 +86,8 @@ const Register = () => {
           className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
           type="text"
           placeholder="Enter your full name"
+          onChange={handleChange}
+          name="fullName"
         />
 
         {/* Email */}
@@ -38,15 +95,9 @@ const Register = () => {
         <input
           className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
           type="email"
+          name="email"
           placeholder="Enter your email"
-        />
-
-        {/* Phone */}
-        <label className="block font-semibold text-green-700 mb-1">Phone</label>
-        <input
-          className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
-          type="text"
-          placeholder="Enter your phone number"
+          onChange={handleChange}
         />
 
         {/* Role */}
@@ -55,6 +106,9 @@ const Register = () => {
         </label>
         <select
           className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
+          onChange={handleChange}
+          name="role"
+          value={formData.role}
         >
           <option value="farmer">Farmer</option>
           <option value="admin">Admin</option>
@@ -68,6 +122,8 @@ const Register = () => {
           className="w-full p-3 rounded-lg mb-4 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
           type="password"
           placeholder="Enter your password"
+          onChange={handleChange}
+          name="password"
         />
 
         {/* Confirm Password */}
@@ -78,12 +134,14 @@ const Register = () => {
           className="w-full p-3 rounded-lg mb-6 border border-green-300 focus:ring-2 focus:ring-green-500 outline-none transition"
           type="password"
           placeholder="Confirm your password"
+          onChange={handleChange}
+          name="confirmPassword"
         />
 
         {/* Register Button */}
         <button
           className="w-full p-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition"
-          onClick={goToLogin}
+          onClick={handleRegistration}
         >
           Register
         </button>

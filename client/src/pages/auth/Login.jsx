@@ -1,15 +1,18 @@
-import { motion } from "framer-motion";
+import { motion, setDragLock } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { axiosInstance } from "../../utils/axiosInstance";
 import { API_PATH } from "../../utils/apiPath";
+import { ThemeContext } from "../../context/ThemeProvider";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { dark } = useContext(ThemeContext);
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  console.log(dark);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,12 +45,23 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-green-50 to-green-100 px-5">
+    <div
+      className={`flex justify-center items-center min-h-screen px-5 
+        ${
+          dark
+            ? "bg-[#0a0f0a] text-white"
+            : "bg-gradient-to-br from-green-50 to-emerald-100 text-gray-800"
+        }`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl p-8"
+        className={`w-full max-w-md  backdrop-blur-lg shadow-xl rounded-2xl p-8  ${
+          dark
+            ? "bg-white/5 border border-white/10"
+            : "bg-white/90 border border-green-200"
+        }`}
       >
         <h1 className="text-4xl font-bold text-center text-green-700 mb-2">
           🌾 Welcome Back
@@ -89,7 +103,7 @@ const Login = () => {
         {/* Forgot Password */}
         <div className="flex justify-end mt-2">
           <Link
-            to="/forget"
+            to="/forgot-password"
             className="text-sm text-green-600 font-medium hover:underline"
           >
             Forgot Password?
@@ -103,7 +117,7 @@ const Login = () => {
         <p className="text-center text-sm text-green-700">
           Don’t have an account?{" "}
           <Link
-            to="/Register"
+            to="/register"
             className="font-semibold text-green-700 hover:underline"
           >
             Register

@@ -8,24 +8,34 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import AuthProvider from "./context/AuthProvider";
 
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <AuthProvider>
-      <div>
-        <Routes>
-          {/* public Routes */}
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/Register" element={<Register />}></Route>
-          <Route path="/forget" element={<ForgotPassword />}></Route>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#fff",
+            color: "#333",
+          },
+        }}
+      />
+      <Routes>
+        {/* public Routes */}
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/Register" element={<Register />}></Route>
+        <Route path="/forget" element={<ForgotPassword />}></Route>
 
-          {/* private Route */}
-          <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
-            <Route path="/contact" element={<Contact />}></Route>
-          </Route>
-        </Routes>
-      </div>
+        {/* private Route */}
+        <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+        </Route>
+      </Routes>
     </AuthProvider>
   );
 }
