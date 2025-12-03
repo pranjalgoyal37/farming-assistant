@@ -26,8 +26,8 @@ async def register(data: UserRegister):
         fullName=data.fullName,
         email=data.email,
         password=hash_pass(data.password),
-        role="user",
-        profile_url="data.profile_url"
+        role=data.role,
+
     )
     await user.insert()
 
@@ -38,7 +38,7 @@ async def register(data: UserRegister):
         "id": str(user.id),
         "fullName": user.fullName,
         "email": user.email,
-        "profile_url": user.profile_url,
+    
         "role" : user.role
     }
 }
