@@ -18,6 +18,8 @@ app.add_middleware(
 async def start_db():
     await init_db()
 
-app.include_router(auth_router,)
+app.include_router(auth_router)
+from app.routes.crop import router as crop_router
+app.include_router(crop_router, prefix="/api/crop", tags=["Crop Recommendation"])
 
 
