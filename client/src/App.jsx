@@ -5,6 +5,7 @@ import Contact from "./components/Home/contatct";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import CropRecommendation from "./pages/CropRecommendation";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import AuthProvider from "./context/AuthProvider";
 
@@ -33,6 +34,7 @@ function App() {
         {/* private Route */}
         <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/crop-recommendation" element={<CropRecommendation />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
         </Route>
       </Routes>
