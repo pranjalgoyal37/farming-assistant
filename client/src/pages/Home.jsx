@@ -17,16 +17,17 @@ const Home = () => {
         : "bg-gradient-to-br from-green-50 to-emerald-100 text-gray-800"
         }`}
     >
-      {/* Nav Bar */}
+      {/* NavBar */}
       <NavBar />
 
-      {/* HERO SECTION */}
-      <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-20">
+      {/* === HERO SECTION === */}
+      <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 md:py-28 gap-10">
+        {/* LEFT TEXT */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl"
+          className="max-w-xl text-center md:text-left"
         >
           <h1
             className={`text-5xl md:text-6xl font-extrabold leading-tight ${dark ? "text-white" : "text-green-900"
@@ -40,30 +41,30 @@ const Home = () => {
             {t('heroDescription')}
           </p>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Link
               to="/register"
-              className="px-6 py-3 bg-green-700 text-white rounded-lg shadow-md hover:bg-green-800 transition"
+              className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-lg hover:bg-green-700 transition font-semibold"
             >
               {t('getStarted')}
             </Link>
 
             <Link
               to="/login"
-              className="px-6 py-3 border border-green-700 text-green-700 rounded-lg hover:bg-green-700 hover:text-white transition"
+              className="px-6 py-3 border-2 border-green-600 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition font-semibold"
             >
               {t('login')}
             </Link>
           </div>
         </motion.div>
 
+        {/* RIGHT IMAGE */}
         <motion.img
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          // src="https://stockcake.com/i/farmers-tending-crops_1260909_582733"
           src={Hero}
-          className="w-150 h-100 mt-10 md:mt-0 animate-float rounded-2xl"
+          className="w-full max-w-md rounded-2xl shadow-2xl object-cover"
         />
       </section>
 
@@ -73,7 +74,69 @@ const Home = () => {
           🌱 {t('keyFeatures')}
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            [
+              '🌾 Crop Recommendation',
+              'Get suggestions for the best crops based on soil & weather.'
+            ],
+            [
+              '🧪 Fertilizer Guide',
+              'Get nutrient-balanced fertilizer recommendations.'
+            ],
+            [
+              '📸 Disease Detection',
+              'Upload leaf images and detect diseases instantly.'
+            ],
+            [
+              '☁️ Weather Alerts',
+              'Stay updated with live rainfall, humidity & heat alerts.'
+            ],
+            [
+              '🤖 Smart Chat Assistant',
+              'Ask farming questions and get instant AI answers.'
+            ],
+            [
+              '📊 Analytics Dashboard',
+              'Track farm growth, soil health & reports.'
+            ]
+          ].map(([title, text], i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className={`p-6 rounded-xl shadow-lg border ${
+                dark
+                  ? 'bg-white/5 border-white/10'
+                  : 'bg-white border-green-100'
+              } hover:shadow-2xl hover:scale-[1.02] transition-transform`}
+            >
+              <h3 className="text-xl font-semibold mb-2">{title}</h3>
+              <p
+                className={`${
+                  dark ? 'text-gray-300' : 'text-gray-600'
+                } text-sm md:text-base`}
+              >
+                {text}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* === HOW AGRISENSE WORKS (REDESIGNED) === */}
+      <section className="px-6 md:px-20 py-20 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-transparent dark:to-transparent">
+        <h2
+          className={`text-3xl md:text-4xl font-bold text-center mb-14 ${
+            dark ? 'text-green-300' : 'text-green-800'
+          }`}
+        >
+          🚀 How AgriSense Works
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {[
             {
               title: t('cropFeature'),
@@ -148,7 +211,7 @@ const Home = () => {
         </p>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
