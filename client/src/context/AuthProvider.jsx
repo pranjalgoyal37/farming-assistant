@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, usestate } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -17,8 +17,8 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage, removeItem("token");
-    localStorage, removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
     window.location.replace("/login");
   };

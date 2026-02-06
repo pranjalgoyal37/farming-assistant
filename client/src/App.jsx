@@ -8,36 +8,44 @@ import Dashboard from "./pages/Dashboard";
 import CropRecommendation from "./pages/CropRecommendation";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import AuthProvider from "./context/AuthProvider";
+import LanguageProvider from "./context/LanguageProvider";
 
 import { Toaster } from "react-hot-toast";
+
+import FertilizerGuide from "./pages/FertilizerGuide";
+import Weather from "./pages/Weather";
 
 function App() {
   return (
     <AuthProvider>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: "#fff",
-            color: "#333",
-          },
-        }}
-      />
-      <Routes>
-        {/* public Routes */}
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/Register" element={<Register />}></Route>
-        <Route path="/forget" element={<ForgotPassword />}></Route>
+      <LanguageProvider>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#fff",
+              color: "#333",
+            },
+          }}
+        />
+        <Routes>
+          {/* public Routes */}
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/Register" element={<Register />}></Route>
+          <Route path="/forget" element={<ForgotPassword />}></Route>
 
-        {/* private Route */}
-        <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/crop-recommendation" element={<CropRecommendation />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-        </Route>
-      </Routes>
+          {/* private Route */}
+          <Route element={<PrivateRoutes allowedRoles={["admin", "farmer"]} />}>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/crop-recommendation" element={<CropRecommendation />}></Route>
+            <Route path="/fertilizer" element={<FertilizerGuide />}></Route>
+            <Route path="/weather" element={<Weather />}></Route>
+            <Route path="/contact" element={<Contact />}></Route>
+          </Route>
+        </Routes>
+      </LanguageProvider>
     </AuthProvider>
   );
 }

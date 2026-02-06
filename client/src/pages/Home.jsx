@@ -1,18 +1,21 @@
-import { useContext } from 'react'
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import Hero from '../assets/Hero.jpg'
-import { ThemeContext } from '../context/ThemeProvider'
-import NavBar from '../components/NavBar'
-import Footer from '../components/Home/Footer'
+import { useState, useContext } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import Hero from "../assets/Hero.jpg";
+import { ThemeContext } from "../context/ThemeProvider";
+import NavBar from "../components/NavBar";
+import { useLanguage } from "../context/LanguageProvider";
+
 const Home = () => {
-  const { dark } = useContext(ThemeContext)
+  const { dark } = useContext(ThemeContext);
+  const { t } = useLanguage();
 
   return (
     <div
-      className={`min-h-screen transition-all duration-500 ${
-        dark ? 'bg-[#0a0f0a] text-white' : 'bg-white text-gray-800'
-      }`}
+      className={`min-h-screen transition-all duration-500 ${dark
+        ? "bg-[#0a0f0a] text-white"
+        : "bg-gradient-to-br from-green-50 to-emerald-100 text-gray-800"
+        }`}
     >
       {/* NavBar */}
       <NavBar />
@@ -27,22 +30,15 @@ const Home = () => {
           className="max-w-xl text-center md:text-left"
         >
           <h1
-            className={`text-4xl md:text-6xl font-extrabold leading-tight ${
-              dark ? 'text-white' : 'text-green-900'
-            }`}
+            className={`text-5xl md:text-6xl font-extrabold leading-tight ${dark ? "text-white" : "text-green-900"
+              }`}
           >
-            Grow Smarter with
-            <span className="block text-green-600">AI-Powered Farming</span>
+            {t('heroTitle')}
+            <span className="text-green-700"> {t('heroSubtitle')}</span>
           </h1>
 
-          <p
-            className={`mt-4 text-lg ${
-              dark ? 'text-gray-300' : 'text-gray-600'
-            }`}
-          >
-            AgriSense combines nature, data and AI to help farmers make better
-            decisions — crop selection, plant health, fertilizer needs, and
-            more.
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            {t('heroDescription')}
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -50,14 +46,14 @@ const Home = () => {
               to="/register"
               className="px-6 py-3 bg-green-600 text-white rounded-xl shadow-lg hover:bg-green-700 transition font-semibold"
             >
-              Get Started
+              {t('getStarted')}
             </Link>
 
             <Link
               to="/login"
               className="px-6 py-3 border-2 border-green-600 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition font-semibold"
             >
-              Login
+              {t('login')}
             </Link>
           </div>
         </motion.div>
@@ -72,14 +68,10 @@ const Home = () => {
         />
       </section>
 
-      {/* === FEATURES SECTION === */}
-      <section className="px-6 md:px-20 py-16">
-        <h2
-          className={`text-3xl md:text-4xl font-bold text-center mb-12 ${
-            dark ? 'text-green-300' : 'text-green-700'
-          }`}
-        >
-          🌱 Key Features
+      {/* FEATURES SECTION */}
+      <section className="px-6 md:px-20 py-14">
+        <h2 className="text-4xl font-bold text-center mb-10 text-green-700">
+          🌱 {t('keyFeatures')}
         </h2>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -147,52 +139,77 @@ const Home = () => {
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {[
             {
-              step: '1',
-              title: 'Upload Crop / Soil Data',
-              text: 'Enter soil values (NPK, pH, moisture) or crop symptoms.'
+              title: t('cropFeature'),
+              text: t('cropFeatureDesc'),
+              link: "/crop-recommendation"
             },
             {
-              step: '2',
-              title: 'AI Processes Data',
-              text: 'AI analyzes soil, weather, plant health & disease signals.'
+              title: t('fertilizerFeature'),
+              text: t('fertilizerFeatureDesc'),
+              link: "/fertilizer"
             },
             {
-              step: '3',
-              title: 'Get Instant Insights',
-              text: 'Receive crop, fertilizer & disease reports instantly.'
-            }
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className={`p-10 text-center rounded-2xl shadow-xl border ${
-                dark
-                  ? 'bg-white/5 border-white/10'
-                  : 'bg-white border-green-200'
-              } hover:scale-[1.03] transition-transform`}
-            >
-              <div
-                className={`text-6xl font-extrabold mb-4 ${
-                  dark ? 'text-green-300' : 'text-green-600'
-                }`}
+              title: t('diseaseFeature'),
+              text: t('diseaseFeatureDesc'),
+              link: "/disease-detection"
+            },
+            {
+              title: t('weatherFeature'),
+              text: t('weatherFeatureDesc'),
+              link: "/weather"
+            },
+            {
+              title: t('chatbotFeature'),
+              text: t('chatbotFeatureDesc'),
+              link: "/chatbot"
+            },
+            {
+              title: t('analyticsFeature'),
+              text: t('analyticsFeatureDesc'),
+              link: "/dashboard"
+            },
+          ].map((f, i) => (
+            <Link to={f.link} key={i}>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className={`p-6 rounded-xl shadow-lg backdrop-blur-lg transition-all duration-500 cursor-pointer hover:scale-105
+                ${dark
+                    ? "bg-white/5 border border-white/10 hover:bg-white/10"
+                    : "bg-white/90 border border-green-200 hover:border-green-400 hover:shadow-xl"
+                  }`}
               >
-                {item.step}
-              </div>
-
-              <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
-
-              <p className={`${dark ? 'text-gray-300' : 'text-gray-600'}`}>
-                {item.text}
-              </p>
-            </motion.div>
+                <h3 className="text-2xl font-semibold mb-2">{f.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{f.text}</p>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </section>
 
-      <Footer />
+      {/* FOOTER */}
+      <footer
+        className={`mt-20 py-10 text-center ${dark ? "bg-white/5 border-t border-white/10" : "bg-green-50"
+          }`}
+      >
+        <h3 className="text-xl font-semibold text-green-700">
+          🌿 {t('appName')} — {t('tagline')}
+        </h3>
+        <p className="mt-2 text-gray-600 dark:text-gray-300">
+          {t('footerTagline')}
+        </p>
+
+        <div className="mt-4 flex justify-center gap-6 text-green-700 dark:text-green-300">
+          <a href="#">{t('privacyPolicy')}</a>
+          <a href="#">{t('termsOfService')}</a>
+          <a href="#">{t('contact')}</a>
+        </div>
+
+        <p className="mt-6 text-sm text-gray-500">
+          © {new Date().getFullYear()} {t('appName')}. {t('allRightsReserved')}
+        </p>
+      </footer>
     </div>
   )
 }

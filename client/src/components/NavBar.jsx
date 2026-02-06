@@ -10,18 +10,13 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`w-full fixed top-0 left-0 z-50 px-6 md:px-12 py-4 flex justify-between items-center shadow-md 
-      backdrop-blur-lg transition-all
-      ${
-        dark
-          ? 'bg-black/40 border-b border-white/10'
-          : 'bg-white/70 border-b border-green-200'
-      }`}
+      className={`w-full flex justify-between items-center px-8 py-4 shadow-md backdrop-blur-md 
+          ${dark
+          ? "bg-white/5 border-b border-white/10"
+          : "bg-white/70 border-b border-green-300"
+        }`}
     >
-      {/* Logo */}
-      <h1 className="text-2xl md:text-3xl font-extrabold flex items-center gap-2 text-green-700 dark:text-green-300">
-        🌿 AgriSense
-      </h1>
+      <h1 className="text-3xl font-extrabold text-[#2E7D32]">🌿 FarmAssist</h1>
 
       {/* Desktop Links */}
       <div className="hidden md:flex items-center gap-6">
@@ -52,10 +47,9 @@ const NavBar = () => {
         >
           <motion.div
             animate={{ x: dark ? 24 : 2 }}
-            transition={{ type: 'spring', stiffness: 200 }}
-            className={`w-6 h-6 rounded-full shadow-md ${
-              dark ? 'bg-yellow-300' : 'bg-green-700'
-            }`}
+            transition={{ type: "spring", stiffness: 200 }}
+            className={`w-6 h-6 rounded-full ${dark ? "bg-yellow-300" : "bg-green-600"
+              }`}
           ></motion.div>
         </button>
       </div>
