@@ -29,3 +29,5 @@ uvicorn==0.38.0
 scikit-learn
 pandas
 joblib
+argon2-cffi
+httpx
